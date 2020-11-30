@@ -1,21 +1,23 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 
-import { fetchAllUsers } from './State/AdminEffects';
+import * as actions from './State/AdminActions';
 
-import { UserCard } from './Components/Card';
+import { UserCard } from './Components/UserCard';
+import {NavigationBar} from '../../CommonComponents/AppBar/AppBar';
 
 const AdminPage = ({ dispatch, usersList }) => {
-  useEffect(() => {
-    dispatch(fetchAllUsers());
+    useEffect(() => {
+      dispatch(actions.getAllUsers());
   }, [dispatch]);
 
   const renderUsers = () => {
-    return usersList.map(user => <UserCard key={user.id} user={user} />);
+    return usersList.map(user => <UserCard key={user.userID} user={user} />);
   };
 
   return (
     <section>
+    <NavigationBar/>
       {renderUsers()}
     </section>
   );
@@ -24,5 +26,6 @@ const AdminPage = ({ dispatch, usersList }) => {
 const mapStateToProps = state => ({
   usersList: state.adminPage.usersList,
 });
+
 
 export default connect(mapStateToProps)(AdminPage);

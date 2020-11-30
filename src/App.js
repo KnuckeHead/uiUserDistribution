@@ -6,15 +6,20 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+
+import LoginPage from './Pages/Authentication/LoginPage';
+import RegisterPage from './Pages/Authentication/RegisterPage';
 import AdminPage from './Pages/AdminPage/AdminPage';
-import {NavigationBar} from './Components/AppBar/AppBar';
+import PatientDashboard from './Pages/PatientPage/PatientDashboardPage';
 
 const App = () => {
   return (
     <Router>
-    <NavigationBar/>
       <Switch>
-        <Route exact path="/" component={AdminPage} />
+        <Route exact path="/" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/patientDashboard" component={PatientDashboard} />
+        <Route exact path="/adminPage" component={AdminPage} />
         <Redirect to="/" />
       </Switch>
     </Router>

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card, CardContent, makeStyles, Typography, CardActions, IconButton } from "@material-ui/core";
 import { Edit, Delete } from "@material-ui/icons";
 import { blueGrey } from '@material-ui/core/colors';
-import {EditUserDialog } from './EditUserDialog';
+import EditUserDialog  from './EditUserDialog';
+import * as actions from '../State/AdminActions';
 
 
 const useStyles = makeStyles({
@@ -26,15 +28,16 @@ const useStyles = makeStyles({
 EditUserDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
 };
 
 export const UserCard = ({ user }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
 
+  const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
+    dispatch(actions.setCurrentUserId(user.userID));
   };
 
   const handleClose = () => {
@@ -48,14 +51,14 @@ export const UserCard = ({ user }) => {
           {user.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          {user.address.zipcode}
+          {user.age}
         </Typography>
       </CardContent>
       <CardActions>
-      <IconButton aria-label="Edit User">
-          <Edit fontSize="small" onClick={handleClickOpen}/>
-          <EditUserDialog open={open} onClose={handleClose} />
-      </IconButton>
+        <IconButton aria-label="Edit User" onClick={handleClickOpen} >
+            <Edit fontSize="small" />
+            <EditUserDialog open={open} onClose={handleClose} />
+        </IconButton>
         <IconButton aria-label="Delete User">
             <Delete />
         </IconButton>
@@ -63,4 +66,3 @@ export const UserCard = ({ user }) => {
   </Card>
   );
 };
-    

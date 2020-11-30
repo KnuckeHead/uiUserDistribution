@@ -4,6 +4,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddUserDialog from '../../Pages/AdminPage/Components/AddUserDialog';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -74,6 +76,15 @@ export const NavigationBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -121,7 +132,15 @@ export const NavigationBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem onClick={handleClickOpen}>
+        <IconButton color="inherit" >
+          <AddCircleIcon/>
+          <AddUserDialog open={open} onClose={handleClose} />
+        </IconButton>
+        <p>Add User</p>
+      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
+        
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -148,7 +167,7 @@ export const NavigationBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Organic Bazaar
+            Project Name
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -165,6 +184,10 @@ export const NavigationBar = () => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <IconButton color="inherit" onClick={handleClickOpen}>
+              <AddCircleIcon/>
+              <AddUserDialog open={open} onClose={handleClose} />
+            </IconButton>
             <IconButton
               edge="end"
               aria-label="account of current user"
